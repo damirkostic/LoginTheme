@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-form">
+        <div class="backbtn" id="backbtn" onclick="back(event);">
+          <i class="fa fa-arrow-left"></i>
+        </div>
+        <div class="line">
+          <div>Login</div>
+          <p>Enter your credentials</p>
+        </div>
+        <div class="phases" id="phase-form">
+          <div class="phase-1">
+            <input id="email" onfocus="removeError(this);" type="text" placeholder="Enter Email">
+            <button onclick="next();">Next</button>
+          </div>
+          <div class="phase-2">
+            <input type="password" onfocus="removeError(this);" id="password" placeholder="Enter password">
+            <button onclick="submitForm();">Submit</button>      
+          </div>
+        </div>
+        <div class="create">
+          <a href="#">Create an account</a>
+        </div>
+        <div class="loading"></div>
+      </div> 
+      <script>
+          var state = false;
+            function next() {
+            var email = trim(document.getElementById('email').value);
+            if(isEmail(email)) {
+                document.getElementById('backbtn').classList.add('active');
+                document.getElementById('phase-form').classList.add('next');
+                state = true;
+            } else {
+                document.getElementById('email').classList.add('error');
+            }
+            }
+            function submitForm() {
+            var password = trim(document.getElementById('password').value);
+            if(password.length > 5) {
+                //Submit form ...
+                document.getElementsByClassName('loading')[0].classList.add('show-it');
+            } else {
+                document.getElementById('password').classList.add('error');
+            }
+            }
+            function trim(str) {
+                str = str.replace(/^\s+/, '');
+                for (var i = str.length - 1; i >= 0; i--) {
+                    if (/\S/.test(str.charAt(i))) {
+                        str = str.substring(0, i + 1);
+                        break;
+                    }
+                }
+                return str;
+            }
+            function isEmail(str) {
+            var pattern =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            return pattern.test(str);  
+            }
+            function back(e) {
+            if(state) {
+                document.getElementById('backbtn').classList.remove('active');
+                document.getElementById('phase-form').classList.remove('next');
+                state = false;
+            }
+            }
+            function removeError(ref) {
+            try {
+                ref.classList.remove('error');
+            }
+            catch(msg){}
+            }
+      </script>
+</body>
+</html>
